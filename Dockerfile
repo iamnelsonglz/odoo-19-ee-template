@@ -70,14 +70,13 @@ RUN npm install -g rtlcss
 
 # Install Odoo
 ENV ODOO_VERSION 19.0
-ARG ODOO_RELEASE=20251208
-ARG ODOO_SHA=76c8b61b443676477eea546635aca37b8431dd9d
 
-RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
-    && echo "${ODOO_SHA} odoo.deb" | sha1sum -c - \
-    && apt-get update \
-    && apt-get -y install --no-install-recommends ./odoo.deb \
-    && rm -rf /var/lib/apt/lists/* odoo.deb
+# Copy the local Odoo deb package
+COPY odoo_deb/ /tmp/odoo_deb/
+
+RUN apt-get update \
+    && apt-get -y install --no-install-recommends /tmp/odoo_deb/odoo*.deb \
+    && rm -rf /var/lib/apt/lists/* /tmp/odoo_deb/
 
 # Copy entrypoint and config
 COPY ./entrypoint.sh /
