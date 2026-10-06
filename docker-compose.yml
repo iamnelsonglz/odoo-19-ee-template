@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16
+    image: postgres:17
     container_name: odoo-19-ee-db
     env_file:
       - .env
