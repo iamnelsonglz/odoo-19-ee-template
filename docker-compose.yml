@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:17
-    container_name: odoo-19-ee-db
+    container_name: odoo19-db
     env_file:
       - .env
     ports:
@@ -24,7 +24,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: odoo-19-ee-app
+    container_name: odoo19-app
     env_file:
       - .env
     depends_on:
